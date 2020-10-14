@@ -1,8 +1,11 @@
 package com.sibu.encrypt.util;
 
+import com.sibu.encrypt.constants.Constants;
 import org.bson.*;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <pre>
@@ -103,9 +106,8 @@ public class BsonUtil
                 if (obj.keySet().size() > max)
                 {
                     max = obj.keySet().size();
-                    dropTableSql = buildDropTableSql(obj);
-                    createTableSql = buildCreateTableSql(obj);
-                    break;
+                    dropTableSql = buildDropTableSql("sdbackend_mongo", "sd_erp_sale_stock");
+                    createTableSql = buildCreateTableSql("sdbackend_mongo","sd_erp_sale_stock", obj);
                 }
             }
         }
@@ -114,20 +116,55 @@ public class BsonUtil
             e.printStackTrace();
         }
         System.err.println(String.format("%s objects read", max));
-        return String.join("--------华丽分割符---------\\n",dropTableSql,createTableSql);
+        return String.join("\n--------华丽分割符---------\n",dropTableSql,createTableSql);
     }
 
-    private static StringBuilder buildCreateTableSql(BSONObject obj) {
-        return null;
+    private static StringBuilder buildCreateTableSql(String dbName, String tableName, BSONObject obj)
+    {
+        StringBuilder createBuilder = new StringBuilder();
+        createBuilder.append("CREATE TABLE IF NOT EXISTS ").append(dbName).append(Constants.DOT).append(tableName).append(" (").append("    ").append("\n");
+        createBuilder.append("    ").append("`sharing_seq`    STRING    comment '数据源地址',").append("\n");
+        createBuilder.append("    ").append("`db_seq`         STRING    comment '数据库序号',").append("\n");
+        createBuilder.append("    ").append("`tb_seq`         STRING    comment '数据表序号',").append("\n");
+        List<String> fields = new ArrayList<>(obj.keySet());
+        int size = fields.size()-1;
+
+        for (String field : fields)
+        {
+            if (field.startsWith("_")) {
+                field = field.split("_")[1];
+            }
+
+            createBuilder.append("    ").append("`").append(field).append("`").append("        ").append(StringUtils.isEmpty(obj.get(field)) ? "STRING" : obj.get(field).getClass().getSimpleName().toUpperCase()).append("    ").append("comment ").append("'").append(" ");
+            if (fields.indexOf(field) != size)
+            {
+                createBuilder.append(",");
+            }
+            createBuilder.append("\n");
+        }
+
+        createBuilder.append(" )  ").append("    ").append("\n");
+        createBuilder.append("ROW FORMAT SERDE 'com.mongodb.hadoop.hive.BSONSerDe'").append("\n");
+        createBuilder.append("WITH SERDEPROPERTIES('mongo.columns.mapping'='{\"id\":\"_id\"}')").append("\n");
+        createBuilder.append("STORED AS INPUTFORMAT 'com.mongodb.hadoop.mapred.BSONFileInputFormat'").append("\n");
+        createBuilder.append("OUTPUTFORMAT 'com.mongodb.hadoop.hive.output.HiveBSONFileOutputFormat'").append("\n");
+        //createBuilder.append("location").append(" \"").append(apolloDto.getPathPrefix()).append(StringUtils.getName(sqoopParamsDto.getDatabaseName())).append("/").append(StringUtils.getName(sqoopParamsDto.getTableName())).append("\"").append(" \n");
+        createBuilder.append("location").append(" '/data/business/").append(dbName).append("/").append(tableName).append("'; \n");
+
+        return createBuilder;
     }
 
-    private static StringBuilder buildDropTableSql(BSONObject obj) {
-        return null;
+    private static StringBuilder buildDropTableSql(String dbName, String tableName)
+    {
+        StringBuilder deleteBuilder = new StringBuilder();
+        deleteBuilder.append("DROP TABLE IF EXISTS ").append(dbName).append(Constants.DOT).append(tableName).append(";");
+        return deleteBuilder;
     }
 
     public static void main(String[] args)
     {
-        System.out.println(replaceLineFeed(new File("E:\\chromedownload\\sd_erp_sale_stock.bson")));
+        //System.out.println(replaceLineFeed(new File("E:\\chromedownload\\sd_erp_sale_stock.bson")));
+        System.out.println(mongoStruct(new File("E:\\chromedownload\\sd_erp_sale_stock.bson")));
     }
 
 }

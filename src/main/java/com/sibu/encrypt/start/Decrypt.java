@@ -28,7 +28,7 @@ public class Decrypt
             @Override
             public void run(){
                 //声明JFrame
-                final JFrame frame = new JFrame("Encrypt解密");
+                final JFrame frame = new JFrame("Decrypt解密");
                 //文本框
                 final JTextArea textarea = new JTextArea(20, 70);
                 textarea.setLineWrap(true);//设置为自动换行
