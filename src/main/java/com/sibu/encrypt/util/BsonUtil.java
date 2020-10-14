@@ -51,12 +51,6 @@ public class BsonUtil
                 {
                     break;
                 }
-                /*
-                 * if (StringUtils.isNotEmpty(obj.get("gui_equip_ids")))
-                 * {
-                 * System.out.println(obj);
-                 * }
-                 */
                 for (String key : obj.keySet())
                 {
 
@@ -66,12 +60,6 @@ public class BsonUtil
                     }
                 }
                 fileOutputStream.write(encoder.encode(obj));
-                /*
-                 * if (obj.keySet().size() > 50) {
-                 * System.out.println(obj);
-                 * break;
-                 * }
-                 */
                 count++;
             }
         }
