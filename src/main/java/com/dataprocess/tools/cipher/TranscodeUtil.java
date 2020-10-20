@@ -1,7 +1,7 @@
-package com.sibu.encrypt.cipher;
+package com.dataprocess.tools.cipher;
 
-import com.sibu.encrypt.constants.Constants;
-import com.sibu.encrypt.start.CipherUtil;
+import com.dataprocess.tools.constants.Constants;
+import com.dataprocess.tools.start.CipherUtil;
 import org.apache.commons.net.util.Base64;
 
 /**
@@ -194,7 +194,7 @@ public class TranscodeUtil
         System.out.println(CipherUtil.pbeDecrypt(buffer.toString(), Constants.IMP_PBE_PWD, Constants.IMP_PBE_SALT));*/
 
         /*System.out.println("database_settings="+CipherUtil.pbeDecrypt("{\"host\":\"sdadsaf\",\"userName\":\"sdafdfs\",\"password\": \"asdfasdf\"}",Constants.PBE_PWD, Constants.PBE_SALT));*/
-        System.out.println("host="+ CipherUtil.pbeEncrypt("{\"host_01\":\"rr1-wz9w4787jew8ysgei.mysql.rds.aliyuncs.com\",\"host_02\":\"rr2-wz9w4787jew8ysgei.mysql.rds.aliyuncs.com\",\"host_03\":\"rr3-wz9w4787jew8ysgei.mysql.rds.aliyuncs.com\",\"host_04\":\"rr4-wz9w4787jew8ysgei.mysql.rds.aliyuncs.com\",\"host_05\":\"rr5-wz9w4787jew8ysgei.mysql.rds.aliyuncs.com\",\"host_06\":\"rr6-wz9w4787jew8ysgei.mysql.rds.aliyuncs.com\",\"host_07\":\"rr7-wz9w4787jew8ysgei.mysql.rds.aliyuncs.com\",\"host_08\":\"rr8-wz9w4787jew8ysgei.mysql.rds.aliyuncs.com\"}",Constants.PBE_PWD, Constants.PBE_SALT));
+        System.out.println("host="+ CipherUtil.pbeEncrypt("{\"host_01\":\"rr1-wz9w4787jew8ysgei.mysql.rds.aliyuncs.com\",\"host_02\":\"rr2-wz9w4787jew8ysgei.mysql.rds.aliyuncs.com\",\"host_03\":\"rr3-wz9w4787jew8ysgei.mysql.rds.aliyuncs.com\",\"host_04\":\"rr4-wz9w4787jew8ysgei.mysql.rds.aliyuncs.com\",\"host_05\":\"rr5-wz9w4787jew8ysgei.mysql.rds.aliyuncs.com\",\"host_06\":\"rr6-wz9w4787jew8ysgei.mysql.rds.aliyuncs.com\",\"host_07\":\"rr7-wz9w4787jew8ysgei.mysql.rds.aliyuncs.com\",\"host_08\":\"rr8-wz9w4787jew8ysgei.mysql.rds.aliyuncs.com\"}", Constants.PBE_PWD, Constants.PBE_SALT));
         System.out.println("host="+CipherUtil.pbeEncrypt("{\"host_01\":\"3301\",\"port_02\":\"3302\",\"port_03\":\"3303\",\"port_04\":\"3304\",\"port_05\":\"3305\",\"port_06\":\"3306\",\"port_07\":\"3307\",\"port_08\":\"3308\"}",Constants.PBE_PWD, Constants.PBE_SALT));
         System.out.println("user_name="+CipherUtil.pbeEncrypt("{\"user_name_01\":\"pro_bigdata_rd_01\",\"user_name_02\":\"pro_bigdata_rd_02\",\"user_name_03\":\"pro_bigdata_rd_03\",\"user_name_04\":\"pro_bigdata_rd_04\",\"user_name_05\":\"pro_bigdata_rd_05\",\"user_name_06\":\"pro_bigdata_rd_06\",\"user_name_07\":\"pro_bigdata_rd_07\",\"user_name_08\":\"pro_bigdata_rd_08\"}",Constants.PBE_PWD, Constants.PBE_SALT));
         System.out.println("password="+CipherUtil.pbeEncrypt("{\"password_01\":\"U4kD2l4GjbLTdLHy_01\",\"password_02\":\"U4kD2l4GjbLTdLHy_02\",\"password_03\":\"U4kD2l4GjbLTdLHy_03\",\"password_04\":\"U4kD2l4GjbLTdLHy_04\",\"password_05\":\"U4kD2l4GjbLTdLHy_05\",\"password_06\":\"U4kD2l4GjbLTdLHy_06\",\"password_07\":\"U4kD2l4GjbLTdLHy_07\",\"password_08\":\"U4kD2l4GjbLTdLHy_08\"}",Constants.PBE_PWD, Constants.PBE_SALT));

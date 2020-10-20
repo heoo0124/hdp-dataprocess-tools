@@ -1,6 +1,6 @@
-package com.sibu.encrypt.util;
+package com.dataprocess.tools.util;
 
-import com.sibu.encrypt.constants.Constants;
+import com.dataprocess.tools.constants.Constants;
 import org.bson.*;
 
 import java.io.*;
@@ -30,7 +30,7 @@ public class BsonUtil
      * @param file
      * @return java.lang.String
      **/
-    private static String replaceLineFeed(File file)
+    private static String replaceLinefeed(File file)
     {
         // user.dir指定了当前的路径
         System.out.println(System.getProperty("user.dir"));
@@ -53,7 +53,6 @@ public class BsonUtil
                 }
                 for (String key : obj.keySet())
                 {
-
                     if (StringUtils.isNotEmpty(obj.get(key)) && obj.get(key).getClass() == String.class)
                     {
                         obj.put(key, obj.get(key).toString().replaceAll("(\\r\\n|\\n|\\n\\r)", ""));
@@ -112,8 +111,8 @@ public class BsonUtil
         StringBuilder createBuilder = new StringBuilder();
         createBuilder.append("CREATE TABLE IF NOT EXISTS ").append(dbName).append(Constants.DOT).append(tableName).append(" (").append("    ").append("\n");
         createBuilder.append("    ").append("`sharing_seq`    STRING    comment '数据源地址',").append("\n");
-        createBuilder.append("    ").append("`db_seq`         STRING    comment '数据库序号',").append("\n");
-        createBuilder.append("    ").append("`tb_seq`         STRING    comment '数据表序号',").append("\n");
+        createBuilder.append("    ").append("`db_seq`    STRING    comment '数据库序号',").append("\n");
+        createBuilder.append("    ").append("`tb_seq`    STRING    comment '数据表序号',").append("\n");
         List<String> fields = new ArrayList<>(obj.keySet());
         int size = fields.size()-1;
 
@@ -123,7 +122,8 @@ public class BsonUtil
                 field = field.split("_")[1];
             }
 
-            createBuilder.append("    ").append("`").append(field).append("`").append("        ").append(StringUtils.isEmpty(obj.get(field)) ? "STRING" : obj.get(field).getClass().getSimpleName().toUpperCase()).append("    ").append("comment ").append("'").append(" ");
+            String dataType = StringUtils.isEmpty(obj.get(field)) ? "STRING" : obj.get(field).getClass().getSimpleName().toUpperCase();
+            createBuilder.append("    ").append("`").append(field).append("`").append("    ").append("INTEGER".equals(dataType) ? "BIGINT" : dataType);
             if (fields.indexOf(field) != size)
             {
                 createBuilder.append(",");
@@ -151,8 +151,8 @@ public class BsonUtil
 
     public static void main(String[] args)
     {
-        //System.out.println(replaceLineFeed(new File("E:\\chromedownload\\sd_erp_sale_stock.bson")));
-        System.out.println(mongoStruct(new File("E:\\chromedownload\\sd_erp_sale_stock.bson")));
+        //System.out.println(replaceLinefeed(new File("E:\\chromedownload\\sd_erp_sale_stock.bson")));
+        System.out.println(mongoStruct(new File("E:\\chromedownload\\sd_msg_task._COPYING_")));
     }
 
 }

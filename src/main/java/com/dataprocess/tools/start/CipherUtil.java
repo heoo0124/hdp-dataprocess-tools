@@ -1,7 +1,7 @@
-package com.sibu.encrypt.start;
+package com.dataprocess.tools.start;
 
 
-import com.sibu.encrypt.cipher.TranscodeUtil;
+import com.dataprocess.tools.cipher.TranscodeUtil;
 
 import javax.crypto.*;
 import javax.crypto.interfaces.DHPrivateKey;
