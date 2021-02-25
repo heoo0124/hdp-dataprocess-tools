@@ -1,152 +1,32 @@
-heartbeat
-heartbeat
-sd_ad
-sd_ad
-sd_ad_image
-sd_ad_image
-sd_ali_pre_auth_order
-sd_ali_pre_auth_order
-sd_ali_pre_auth_order_mapping
-sd_ali_pre_auth_order_mapping
-sd_ali_source_bind
-sd_ali_source_bind
-sd_area
-sd_area
-sd_attachs
-sd_attachs
-sd_batteries_old
-sd_batteries_old
-sd_battery_log
-sd_battery_log
-sd_bill
-sd_bill
-sd_bill_allocation
-sd_bill_allocation
-sd_bill_detail
-sd_bill_detail
-sd_bill_multi
-sd_bill_multi
-sd_complain
-sd_complain
-sd_complain_image
-sd_complain_image
-sd_country
-sd_country
-sd_coupon
-sd_coupon
-sd_coupon_consume
-sd_coupon_consume
-sd_coupon_item
-sd_coupon_item
-sd_coupon_quota
-sd_coupon_quota
-sd_daily_income_rate
-sd_daily_income_rate
-sd_dict_operator
-sd_dict_operator
-sd_dict_order_status
-sd_dict_order_status
-sd_equip_deposit
-sd_equip_deposit
-sd_equip_deposit_log
-sd_equip_deposit_log
-sd_equip_discount
-sd_equip_discount
-sd_equipments_old
-sd_equipments_old
-sd_failed_jobs
-sd_failed_jobs
-sd_fee_strategy
-sd_fee_strategy
-sd_goods
-sd_goods
-sd_income_rate
-sd_income_rate
-sd_income_rate_log
-sd_income_rate_log
-sd_merchant_bill_account_daily
-sd_merchant_bill_account_daily
-sd_migrations
-sd_migrations
-sd_multi_agent_bill_dailies
-sd_multi_agent_bill_dailies
-sd_oper_log
-sd_oper_log
-sd_oper_records
-sd_oper_records
-sd_order_color_ext
-sd_order_color_ext
-sd_order_ext
-sd_order_ext
-sd_order_troubles
-sd_order_troubles
-sd_orders
-sd_orders
-sd_promotions
-sd_promotions
-sd_qrcode_bind
-sd_qrcode_bind
-sd_qrcode_task
-sd_qrcode_task
-sd_qrcodes
-sd_qrcodes
-sd_refund_error
-sd_refund_error
-sd_remote_upgrade_record
-sd_remote_upgrade_record
-sd_sale_bill_account_daily
-sd_sale_bill_account_daily
-sd_scan_record_log
-sd_scan_record_log
-sd_shop_apply
-sd_shop_apply
-sd_shop_type
-sd_shop_type
-sd_shops
-sd_shops
-sd_slots_old
-sd_slots_old
-sd_source
-sd_source
-sd_station_image
-sd_station_image
-sd_station_infos
-sd_station_infos
-sd_stations
-sd_stations
-sd_subject
-sd_subject
-sd_support_records
-sd_support_records
-sd_switchs
-sd_switchs
-sd_sys_users
-sd_sys_users
-sd_trouble
-sd_trouble
-sd_user_bind
-sd_user_bind
-sd_user_charge_log
-sd_user_charge_log
-sd_user_record
-sd_user_record
-sd_user_record_issue
-sd_user_record_issue
-sd_user_record_item
-sd_user_record_item
-sd_users
-sd_users
-sd_vip_card_order
-sd_vip_card_order
-sd_vip_discount
-sd_vip_discount
-sd_vip_level_log
-sd_vip_level_log
-sd_wechat_fen_order
-sd_wechat_fen_order
-sd_wechat_fen_order_mapping
-sd_wechat_fen_order_mapping
-sd_withdraw_log
-sd_withdraw_log
-sd_withdraw_quota
-sd_withdraw_quota
+CREATE TABLE `sd_stat`.`sd_ass_equipment_income` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `work_order_no` varchar(50) NOT NULL COMMENT '工单编号',
+  `abnormal_slot_income` decimal(16,2) NOT NULL DEFAULT '0.00' COMMENT '异常槽位价值',
+  `add_battery_income` decimal(16,2) NOT NULL DEFAULT '0.00' COMMENT '补宝价值',
+  `asset_recovery_income` decimal(16,2) NOT NULL DEFAULT '0.00' COMMENT '资产找回价值',
+  `recycle_battery_income` decimal(16,2) NOT NULL DEFAULT '0.00' COMMENT '回收宝价值',
+  `disconnected_income` decimal(16,2) NOT NULL DEFAULT '0.00' COMMENT '断线价值',
+  `plummet_income` decimal(16,2) NOT NULL DEFAULT '0.00' COMMENT '骤降价值',
+  `low_moving_pin_income` decimal(16,2) NOT NULL DEFAULT '0.00' COMMENT '低动销价值',
+  `abnormal_slot_status` tinyint(5) NOT NULL DEFAULT '1' COMMENT '异常槽位价值计算状态 (1：计算中 2：已完成)',
+  `add_battery_status` tinyint(5) NOT NULL DEFAULT '1' COMMENT '补宝价值计算状态 (1：计算中 2：已完成)',
+  `asset_recovery_status` tinyint(5) NOT NULL DEFAULT '1' COMMENT '资产找回价值计算状态 (1：计算中 2：已完成)',
+  `recycle_battery_status` tinyint(5) NOT NULL DEFAULT '1' COMMENT '回收宝价值计算状态 (1：计算中 2：已完成)',
+  `disconnected_status` tinyint(5) NOT NULL DEFAULT '1' COMMENT '断线价值计算状态 (1：计算中 2：已完成)',
+  `plummet_status` tinyint(5) NOT NULL DEFAULT '1' COMMENT '骤降价值计算状态 (1：计算中 2：已完成)',
+  `low_moving_pin_status` tinyint(5) NOT NULL DEFAULT '1' COMMENT '低动销价值计算状态 (1：计算中 2：已完成)',
+  `calculation_date` bigint(11) NOT NULL DEFAULT '0' COMMENT '计算日期（时间戳）',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  UNIQUE KEY `uk` (`work_order_no`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='运维设备价值表';
+
+
+
+1、大数据cloudera manager生产集群以及测试集群搭建并维护集群稳定运行
+2、mysql业务库离线数据抽取以及实时数据同步到大数据平台
+3、mongoDB数据同步大数据平台
+4、历史埋点数据同步到新数据平台
+5、设备日志heartbeat,access,other数据同步打新数据平台
+6、新神策埋点，C端小程序埋点文档整理以及对接前端，神策埋点数据测试，校验，修改以及采集入库
+7、帆软

@@ -2,7 +2,11 @@ package com.dataprocess.tools.util;
 
 import com.dataprocess.tools.constants.Constants;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -162,7 +166,21 @@ public class StringUtils
         return database;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
+        Date upTime = new Date();
+        String newtime = "20/Oct/2020:00:09:14 +0800";
+        SimpleDateFormat format = new SimpleDateFormat("dd/MMM/yyyy:hh:mm:ss Z", Locale.US );
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            upTime = format.parse(newtime);
+            newtime = sdf.format(upTime);
+        }catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println( newtime );
+
         System.out.println(getName("auth_taobao_authorization_history_record_3"));
     }
 }

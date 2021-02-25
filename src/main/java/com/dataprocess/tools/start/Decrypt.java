@@ -57,7 +57,7 @@ public class Decrypt
                 final JScrollPane scroller2 = new JScrollPane(textarea2);
 
                 //加密，退出按钮
-                final JButton start = new JButton("开始解密");
+                final JButton start = new JButton("解密");
                 //开始计算相似度事件
                 start.addActionListener(new ActionListener(){
                     @Override

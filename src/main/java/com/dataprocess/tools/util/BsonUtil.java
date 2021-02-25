@@ -4,8 +4,7 @@ import com.dataprocess.tools.constants.Constants;
 import org.bson.*;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * <pre>
@@ -35,10 +34,10 @@ public class BsonUtil
         // user.dir指定了当前的路径
         System.out.println(System.getProperty("user.dir"));
         int count = 0;
+        Map<String, String> filedTypeMaps = new HashMap<>(16);
         BSONObject obj = null;
         try (FileInputStream fileInputStream = new FileInputStream(file);
-                FileOutputStream fileOutputStream = new FileOutputStream(
-                        new File("E:\\chromedownload\\sd_erp_sale_stock_out.bson"));
+                FileOutputStream fileOutputStream = new FileOutputStream(new File("E:\\chromedownload\\sd_mall_order_out.bson"));
                 InputStream inputStream = new BufferedInputStream(fileInputStream))
         {
 
@@ -51,13 +50,43 @@ public class BsonUtil
                 {
                     break;
                 }
-                for (String key : obj.keySet())
+                /*Set<String> keys = new HashSet<>(obj.keySet());
+                keys.removeAll(filedTypeMaps.keySet());
+
+                for (String key : keys)
+                {
+                    String dataType = key+"_type";
+                    filedTypeMaps.put(key, dataType);
+                }*/
+
+                String id = obj.get("_id").toString();
+
+                if(obj.get("_id").toString().equals("5f715de88e527e165c7bf124"))
+                {
+                    String string = obj.get("stock_info").toString();
+                    int length = string.length();
+
+                    System.out.println(length);
+                    // kudu值限制65536
+                    //obj.put(key, "");
+                }
+
+                /*for (String key : obj.keySet())
                 {
                     if (StringUtils.isNotEmpty(obj.get(key)) && obj.get(key).getClass() == String.class)
                     {
                         obj.put(key, obj.get(key).toString().replaceAll("(\\r\\n|\\n|\\n\\r)", ""));
                     }
-                }
+
+
+                    if (StringUtils.isNotEmpty(obj.get(key)) && obj.get(key).toString().length() > 65536)
+                    {
+                        String string = obj.get(key).toString();
+                        int length = string.length();
+                        // kudu值限制65536
+                        obj.put(key, "");
+                    }
+                }*/
                 fileOutputStream.write(encoder.encode(obj));
                 count++;
             }
@@ -151,8 +180,8 @@ public class BsonUtil
 
     public static void main(String[] args)
     {
-        //System.out.println(replaceLinefeed(new File("E:\\chromedownload\\sd_erp_sale_stock.bson")));
-        System.out.println(mongoStruct(new File("E:\\chromedownload\\sd_msg_task._COPYING_")));
+        System.out.println(replaceLinefeed(new File("E:\\chromedownload\\sd_mall_order.bson")));
+        //System.out.println(mongoStruct(new File("E:\\chromedownload\\sd_msg_task._COPYING_")));
     }
 
 }

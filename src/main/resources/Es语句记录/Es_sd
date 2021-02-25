@@ -1,0 +1,1258 @@
+GET /uat/"测试环境,测试环境,测试环境,测试环境,开始"
+
+GET /friends_invitation/_mapping
+
+PUT /friends_invitation/friends_invitation/5/
+{
+    "appOwnerCode": "1000",
+    "disabled": false,
+    "invitationNewTotal": 45,
+    "invitationTotal": 12345,
+    "memberId": 9999,
+    "rank": 1
+}
+POST /friends_invitation/_search
+{
+    "query": {
+        "match": {
+           "disabled": false
+        }
+    }
+}
+
+POST /sub_user/_search
+{
+    "query": {
+        "match_all": {}
+    }
+}
+
+POST /sub_user/_search
+{
+    "query": {
+       "match": {
+          "memberId": "1000061"
+       }
+    },
+    "size": 1,
+    "from": 5
+}
+
+POST /sub_user/_search
+{
+    "query": {
+       "match_all": {}
+    },
+    "sort": [
+       {
+          "subUserCount": {
+             "order": "desc"
+          }
+       }
+    ],
+    "size": 0,
+    "aggs": {
+        "group_by_memeberId":{
+            "terms": {
+                "field": "memberId"
+            }
+        }
+    }
+}
+
+POST /sub_user/_search
+{
+   "size": 0,
+   "aggs": {
+      "max_sub": {
+         "max": {
+            "field": "subUserCount"
+         }
+      }
+   }
+}
+
+POST /sub_user/_search
+{
+   "size": 0,
+   "aggs": {
+      "count_member": {
+         "cardinality": {
+            "field": "memberId"
+         }
+      }
+   }
+}
+
+PUT sub_user/_mapping
+{
+    "properties": {
+        "memberId": {
+            "type": "text",
+            "fielddata": true
+        }
+    }
+}
+
+POST /sub_user/_search
+{
+    "size": 2,
+    "query": {
+        "match": {
+           "memberId": "1000061"
+        }
+    },
+    "search_after": [10],
+    "sort": [
+        {"cancelUserCount": "asc"}
+    ]
+}
+
+POST /screen_live_linechart/_search
+{
+    "size": 2,
+    "query": {
+        "match": {
+           "liveId": "4e3e6bead3314f7b8ca0ed44392a9926"
+        }
+    },
+
+    "sort": [
+        {"_id": "desc"}
+    ]
+}
+
+POST /screen_live_linechart/_search
+{
+    "query": {
+        "match": {
+           "liveId": "4e3e6bead3314f7b8ca0ed44392a9926"
+        }
+    }
+}
+
+GET /_cat/health?v
+
+DELETE /sub_user
+
+PUT /sub_user
+{
+   "settings": {
+      "number_of_replicas": 1,
+      "number_of_shards": 3
+   },
+   "mappings": {
+         "properties": {
+            "liveId": {
+               "analyzer": "keyword",
+               "type": "text"
+            },
+            "memberId": {
+               "analyzer": "keyword",
+               "type": "text",
+               "fielddata": true
+            },
+            "cancelUserCount": {
+               "type": "integer"
+            },
+            "subUserCount": {
+               "type": "integer"
+            }
+         }
+   }
+}
+
+GET /sub_user/_settings
+
+PUT /my_index/_mapping/my_type
+{
+   "properties": {
+      "my_number": {
+         "type": "double"
+      }
+   }
+}
+
+POST /sub_user/_search
+{
+  "query": {
+      "match_all": {}
+  }
+}
+
+GET /my_index/my_type/1/
+
+PUT /my_index/my_type/2
+{
+    "my_keyword": "bunengxiezhongwende ma laji",
+    "my_standard": "cat dog hah"
+}
+
+DELETE /my_index/my_type/1/
+
+DELETE /mall_business_es
+
+PUT /screen_live_linechart
+{
+   "settings": {
+      "number_of_replicas": 1,
+      "number_of_shards": 3
+   },
+   "mappings": {
+         "properties": {
+            "liveId": {
+               "analyzer": "keyword",
+               "type": "text"
+            },
+            "updateTime": {
+               "type": "date"
+            },
+            "purOrderCount": {
+               "type": "integer"
+            },
+            "liveSalesAmount": {
+               "type": "double"
+            },
+            "onlineUsercount": {
+               "type": "integer"
+            },
+            "commentUserCount": {
+               "type": "integer"
+            }
+         }
+   }
+}
+
+POST /screen_live_linechart/_search
+{
+   "query": {
+      "match": {
+         "liveId": "4e3e6bead3314f7b8ca0ed44392a9926"
+      }
+   }
+   , "sort": [
+      {
+         "updateTime": {
+            "order": "desc"
+         }
+      }
+   ]
+}
+
+GET /screen_live_linechart/_doc/4e3e6bead3314f7b8ca0ed44392a99262020-08-18 15:08:13.247191000
+
+GET /screen_live_linechart/_mapping
+
+DELETE /month_seller_info
+
+PUT /month_seller_info
+{
+   "settings": {
+      "number_of_replicas": 1,
+      "number_of_shards": 3
+   },
+   "mappings": {
+      "properties": {
+         "sellerNum": {
+            "type": "integer"
+         },
+         "scoreCycle": {
+            "analyzer": "keyword",
+            "type": "text"
+         },
+         "appOwnerCode": {
+            "type": "text"
+         },
+         "sellerName": {
+            "type": "text"
+         },
+         "sellerChannel": {
+            "type": "integer"
+         },
+         "onlineRate": {
+            "type": "double"
+         },
+         "avgFirstResponseTime": {
+            "type": "double"
+         },
+         "messageViolationCount": {
+            "type": "integer"
+         },
+         "completeFlag": {
+            "type": "integer"
+         }
+      }
+   }
+}
+
+POST /month_seller_info/_search
+{
+    "query": {
+        "match_all": {}
+    }
+}
+
+GET /month_seller_info/_doc/
+
+POST /month_seller_info/_search
+{
+    "query": {
+        "match": {
+           "id": "1100202020-05"
+        }
+    }
+}
+
+GET /month_seller_info/_doc/1102452020-08
+
+GET /uat/"测试环境,测试环境,测试环境,测试环境,结束"
+
+
+
+POST /pro/"生产环境,生产环境,生产环境,生产环境,开始"
+
+PUT /month_seller_info
+{
+   "settings": {
+      "number_of_replicas": 1,
+      "number_of_shards": 3
+   },
+   "mappings": {
+      "properties": {
+         "sellerNum": {
+            "type": "integer"
+         },
+         "scoreCycle": {
+            "analyzer": "keyword",
+            "type": "text"
+         },
+         "appOwnerCode": {
+            "type": "text"
+         },
+         "sellerName": {
+            "type": "text"
+         },
+         "sellerChannel": {
+            "type": "integer"
+         },
+         "onlineRate": {
+            "type": "double"
+         },
+         "avgFirstResponseTime": {
+            "type": "double"
+         },
+         "messageViolationCount": {
+            "type": "integer"
+         },
+         "completeFlag": {
+            "type": "integer"
+         }
+      }
+   }
+}
+
+POST /month_seller_info/_search
+{
+    "query": {
+        "match_all": {}
+    }
+}
+
+POST /month_seller_info/_search
+{
+    "query": {
+        "match": {
+           "sellerNum": 111662
+        }
+    }
+}
+
+POST /month_seller_info/_search
+{
+    "query": {
+        "match": {
+           "scoreCycle": "2020-08"
+        }
+    }
+}
+
+POST /month_seller_info/_search
+{
+    "query": {
+        "bool": {
+            "must": [
+               {
+                  "match": {
+                     "scoreCycle": "2020-08"
+                  }
+               },
+               {
+                   "match": {
+                      "completeFlag": 0
+                   }
+               }
+            ]
+        }
+    }
+}
+
+GET /month_seller_info/_doc/1101462020-09
+
+
+POST /pro/"生产环境,生产环境,生产环境,生产环境,结束"
+
+POST /sd_test/"测试环境,测试环境,测试环境,测试环境,开始"
+PUT /sub_user
+{
+   "settings": {
+      "number_of_replicas": 1,
+      "number_of_shards": 3
+   },
+   "mappings": {
+         "properties": {
+            "liveId": {
+               "analyzer": "keyword",
+               "type": "text"
+            },
+            "memberId": {
+               "analyzer": "keyword",
+               "type": "text",
+               "fielddata": true
+            },
+            "cancelUserCount": {
+               "type": "integer"
+            },
+            "subUserCount": {
+               "type": "integer"
+            }
+         }
+   }
+}
+
+POST /sub_user/_search
+{
+    "query": {
+        "match_all": {}
+    }
+}
+
+POST /sub_user/_search
+{
+   "size": 0,
+   "aggs": {
+      "member": {
+         "terms": {
+            "field": "liveId",
+            "size": 1000
+         },
+         "aggs": {
+            "sum_field": {
+               "sum": {
+                  "field": "cancelUserCount"
+               }
+            },
+            "buckets": {
+               "bucket_sort": {
+                  "sort": {
+                     "sum_field": {
+                        "order": "desc"
+                     }
+                  },
+                  "from": 0,
+                  "size": 5
+               }
+            }
+         }
+      }
+   }
+}
+
+POST /sub_user/_search
+{
+    "size": 0,
+    "aggs": {
+        "member":{
+            "terms":{
+                "field": "cancelUserCount",
+                "order": {
+                    "_count": "desc"
+                },
+                "size" : 5
+            }
+        }
+    }
+}
+
+PUT /ipad_income
+{
+   "settings": {
+      "number_of_replicas": 1,
+      "number_of_shards": 3
+   },
+   "mappings": {
+      "properties": {
+         "dt": {
+            "type": "date"
+         },
+         "stationId": {
+            "analyzer": "keyword",
+            "type": "text",
+			"fielddata": true
+         },
+         "outNumber": {
+			"analyzer": "keyword",
+            "type": "text",
+			"fielddata": true
+         },
+         "stationName": {
+			"analyzer": "keyword",
+            "type": "text",
+			"fielddata": true
+         },
+         "equipType": {
+            "type": "integer"
+         },
+		 "nickname": {
+			"analyzer": "keyword",
+            "type": "text",
+			"fielddata": true
+         },
+		 "shopTypeLevelFirstId": {
+            "type": "integer"
+         },
+		 "shopTypeLevelSecondId": {
+            "type": "integer"
+         },
+		 "provinceId": {
+            "type": "integer"
+         },
+		 "cityId": {
+            "type": "integer"
+         },
+		 "areaId": {
+            "type": "integer"
+         },
+         "totalIncome": {
+            "type": "double"
+         },
+		 "couponIncome": {
+            "type": "double"
+         },
+		 "incomeHandlingFee": {
+            "type": "double"
+         },
+         "refundFee": {
+            "type": "double"
+         },
+		 "refundFeeHandlingFee": {
+            "type": "double"
+         },
+		 "rentalIncome": {
+            "type": "double"
+         },
+		 "shopIncome": {
+            "type": "double"
+         },
+		 "agentIncome": {
+            "type": "double"
+         },
+         "batteryLostSum": {
+            "type": "double"
+         },
+		 "batteryReturnSum": {
+            "type": "double"
+         },
+		 "batteryReturnToSdSum": {
+            "type": "double"
+         },
+		 "batteryIncomeSum": {
+            "type": "double"
+         },
+         "batteryRefundFeeSum": {
+            "type": "double"
+         }
+
+      }
+   }
+}
+
+DELETE /ipad_income
+
+POST /ipad_income/_search
+{
+   "query": {
+      "range": {
+         "dt": {
+            "from": "2020-12-01",
+            "to": "2020-12-01"
+         }
+      }
+   }
+}
+
+POST /ipad_income/_search
+{
+   "query": {
+      "constant_score": {
+         "filter": {
+            "bool": {
+               "must": [
+                  {
+                     "range": {
+                        "dt": {
+                           "from": "2020-12-01",
+                           "to": "2020-12-01"
+                        }
+                     }
+                  },
+                  {
+                     "term": {
+                        "provinceId": 3206
+                     }
+                  },
+                  {
+                     "bool": {
+                        "should": [
+                           {
+                              "term": {
+                                 "shopTypeLevelFirstId": 4
+                              }
+                           },
+                           {
+                              "term": {
+                                 "shopTypeLevelSecondId": 4
+                              }
+                           }
+                        ]
+                     }
+                  }
+               ]
+            }
+         },
+         "boost": 1.2
+      }
+   }
+}
+
+POST /ipad_income/_search
+{
+   "query": {
+      "bool": {
+         "filter": [
+            {
+               "range": {
+                  "dt": {
+                     "from": "2020-12-24",
+                     "to": "2020-12-29"
+                  }
+               }
+            },
+            {
+               "term": {
+                  "equipType": {
+                     "value": 3
+                  }
+               }
+            },
+            {
+                "bool":{
+                    "should": [
+                           {
+                              "term": {
+                                 "shopTypeLevelFirstId": 4
+                              }
+                           }
+                        ]
+                }
+            }
+         ]
+      }
+   }
+}
+
+POST /ipad_income/_search
+{
+   "query": {
+      "bool": {
+         "filter": [
+            {
+               "range": {
+                  "dt": {
+                     "from": "2020-12-24",
+                     "to": "2020-12-29"
+                  }
+               }
+            },
+            {
+               "term": {
+                  "equipType": {
+                     "value": 3
+                  }
+               }
+            }
+         ],
+         "should": [
+            {"term": {
+                                 "shopTypeLevelFirstId": 4
+                              }}
+         ]
+      }
+   }
+}
+
+POST /ipad_income/_search
+{
+   "query": {
+      "bool": {
+         "must": [
+            {
+               "range": {
+                  "dt": {
+                     "from": "2020-12-01",
+                     "to": "2020-12-01"
+                  }
+               }
+            },
+            {
+                "match": {
+                   "stationId": "SYL7405531"
+                }
+            }
+         ]
+      }
+   }
+}
+
+POST /ipad_income/_search
+{
+    "query": {
+        "match": {
+           "id": "f4941db0e8815fc5ba41b336d094b79d"
+        }
+    }
+}
+
+POST /ipad_income/_count
+{
+   "query": {
+      "range": {
+         "dt": {
+            "from": "2020-10-01",
+            "to": "2020-12-02"
+         }
+      }
+   }
+}
+
+POST /ipad_income/_search
+{
+   "query": {
+      "range": {
+         "dt": {
+            "from": "2020-11-30",
+            "to": "2020-12-30"
+         }
+      }
+   },
+   "sort": [
+      {
+         "dt": {
+            "order": "asc"
+         }
+      }
+   ]
+}
+
+POST /ipad_income/_search
+{
+   "size": 0,
+   "query": {
+      "range": {
+         "dt": {
+            "from": "2020-12-24",
+            "to": "2020-12-29"
+         }
+      }
+   },
+   "aggs": {
+      "distint": {
+         "cardinality": {
+            "field": "stationId"
+         }
+      }
+   }
+}
+
+POST /ipad_income/_search
+{
+   "query": {
+      "bool": {
+         "filter": [
+            {
+               "range": {
+                  "dt": {
+                     "from": "2020-11-30",
+                     "to": "2020-12-30"
+                  }
+               }
+            }
+         ]
+      }
+   },
+   "size": 0,
+   "aggs": {
+      "group_by_activityId": {
+         "terms": {
+            "script": "doc['stationId'].value +'|'+ doc['stationName'].value +'|'+ doc['nickname'].value +'|'+ doc['shopTypeLevelFirstId'].value +'|'+ doc['shopTypeLevelSecondId'].value +'|'+ doc['provinceId'].value +'|'+ doc['cityId'].value +'|'+ doc['areaId'].value",
+            "size": 1000
+         },
+         "aggs": {
+            "totalIncome": {
+               "sum": {
+                  "field": "totalIncome"
+               }
+            },
+            "couponIncome": {
+               "sum": {
+                  "field": "couponIncome"
+               }
+            },
+            "incomeHandlingFee": {
+               "sum": {
+                  "field": "incomeHandlingFee"
+               }
+            },
+            "refundFee": {
+               "sum": {
+                  "field": "refundFee"
+               }
+            },
+            "refundFeeHandlingFee": {
+               "sum": {
+                  "field": "refundFeeHandlingFee"
+               }
+            },
+            "rentalIncome": {
+               "sum": {
+                  "field": "rentalIncome"
+               }
+            },
+            "shopIncome": {
+               "sum": {
+                  "field": "shopIncome"
+               }
+            },
+            "agentIncome": {
+               "sum": {
+                  "field": "agentIncome"
+               }
+            },
+            "batteryLostSum": {
+               "sum": {
+                  "field": "batteryLostSum"
+               }
+            },
+            "batteryReturnSum": {
+               "sum": {
+                  "field": "batteryReturnSum"
+               }
+            },
+            "batteryReturnToSdSum": {
+               "sum": {
+                  "field": "batteryReturnToSdSum"
+               }
+            },
+            "batteryIncomeSum": {
+               "sum": {
+                  "field": "batteryIncomeSum"
+               }
+            },
+            "batteryRefundFeeSum": {
+               "sum": {
+                  "field": "batteryRefundFeeSum"
+               }
+            },
+            "buckets": {
+               "bucket_sort": {
+                  "sort": {
+                     "totalIncome": {
+                        "order": "desc"
+                     }
+                  },
+                  "from": 0,
+                  "size": 20
+               }
+            }
+         }
+      }
+   }
+}
+
+POST /ipad_income/_search
+{
+    "query": {
+        "match_all": {}
+    }
+}
+
+POST /ipad_income/_search
+{
+   "query": {
+      "constant_score": {
+         "filter": {
+            "bool": {
+               "must": [
+                  {
+                     "range": {
+                        "dt": {
+                           "from": "2020-12-24",
+                           "to": "2020-12-29"
+                        }
+                     }
+                  },
+                  {
+                      "term": {
+                         "equipType": "8"
+                      }
+                  }
+               ]
+            }
+         },
+         "boost": 1.2
+      }
+   },
+   "size": 0,
+   "aggs": {
+      "group_by_activityId": {
+         "terms": {
+            "script": "doc['stationId'].value +'|'+ doc['stationName'].value +'|'+ doc['nickname'].value +'|'+ doc['shopTypeLevelFirstId'].value +'|'+ doc['shopTypeLevelSecondId'].value +'|'+ doc['provinceId'].value +'|'+ doc['cityId'].value +'|'+ doc['areaId'].value",
+            "size": 2147483647
+         },
+         "aggs": {
+            "totalIncome": {
+               "sum": {
+                  "field": "totalIncome"
+               }
+            },
+            "shopIncome": {
+               "sum": {
+                  "field": "shopIncome"
+               }
+            },
+            "buckets": {
+               "bucket_sort": {
+                  "sort": {
+                     "totalIncome": {
+                        "order": "desc"
+                     }
+                  },
+                  "from": 0,
+                  "size": 20
+               }
+            }
+         }
+      }
+   }
+}
+
+POST /ipad_income/_search
+{
+   "query": {
+      "range": {
+         "dt": {
+            "from": "2020-10-21",
+            "to": "2020-12-29"
+         }
+      }
+   },
+   "size": 0,
+   "aggs": {
+            "totalIncome": {
+               "sum": {
+                  "field": "totalIncome"
+               }
+            },
+            "couponIncome": {
+               "sum": {
+                  "field": "couponIncome"
+               }
+            },
+            "incomeHandlingFee": {
+               "sum": {
+                  "field": "incomeHandlingFee"
+               }
+            },
+            "refundFee": {
+               "sum": {
+                  "field": "refundFee"
+               }
+            },
+            "refundFeeHandlingFee": {
+               "sum": {
+                  "field": "refundFeeHandlingFee"
+               }
+            },
+            "rentalIncome": {
+               "sum": {
+                  "field": "rentalIncome"
+               }
+            },
+            "shopIncome": {
+               "sum": {
+                  "field": "shopIncome"
+               }
+            },
+            "agentIncome": {
+               "sum": {
+                  "field": "agentIncome"
+               }
+            },
+            "batteryLostSum": {
+               "sum": {
+                  "field": "batteryLostSum"
+               }
+            },
+            "batteryReturnSum": {
+               "sum": {
+                  "field": "batteryReturnSum"
+               }
+            },
+            "batteryReturnToSdSum": {
+               "sum": {
+                  "field": "batteryReturnToSdSum"
+               }
+            },
+            "batteryIncomeSum": {
+               "sum": {
+                  "field": "batteryIncomeSum"
+               }
+            },
+            "batteryRefundFeeSum": {
+               "sum": {
+                  "field": "batteryRefundFeeSum"
+               }
+            }
+         }
+}
+
+PUT _cluster/settings
+{
+  "persistent": {
+  "search.max_buckets": 2147483647
+  }
+}
+GET /_cat/indices?v&s=index:desc
+
+POST /sd_test/"测试环境,测试环境,测试环境,测试环境,结束
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+POST /pro/_search/"生产环境,生产环境,生产环境,结束"
+
